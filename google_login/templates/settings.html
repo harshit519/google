@@ -1,0 +1,373 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings - {{ name }}{% endblock %}
+
+{% block content %}
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="{% url 'home' %}">
+            <i class="fab fa-google me-2 fs-3"></i>
+            <span class="animate__animated animate__fadeIn">OAuth Dashboard</span>
+        </a>
+        <div class="navbar-nav ms-auto">
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle d-flex align-items-center fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {{ name }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                    <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user me-2 text-primary"></i>Profile</a></li>
+                    <li><a class="dropdown-item active" href="{% url 'settings' %}"><i class="fas fa-cog me-2 text-success"></i>Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <!-- Settings Header -->
+                <div class="bg-gradient-primary text-white p-5 text-center position-relative">
+                    <div class="position-absolute top-0 end-0 p-4 opacity-25">
+                        <i class="fas fa-cogs" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="animate__animated animate__fadeInUp">
+                        <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
+                            <i class="fas fa-cog text-white" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h2 class="mb-2 fw-bold">Settings</h2>
+                        <p class="mb-0 opacity-75 fs-5">Manage your account preferences</p>
+                    </div>
+                </div>
+                
+                <!-- Settings Content -->
+                <div class="p-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Email Notifications -->
+                            <div class="card border-0 bg-light rounded-3 mb-3 hover-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                                <i class="fas fa-envelope text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold text-dark mb-1">Email Notifications</h6>
+                                                <p class="text-muted mb-0 small">Receive email updates about your account</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                            <label class="form-check-label" for="emailNotifications"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Push Notifications -->
+                            <div class="card border-0 bg-light rounded-3 mb-3 hover-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                                <i class="fas fa-bell text-success"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold text-dark mb-1">Push Notifications</h6>
+                                                <p class="text-muted mb-0 small">Get push notifications in your browser</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="pushNotifications">
+                                            <label class="form-check-label" for="pushNotifications"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Two-Factor Authentication -->
+                            <div class="card border-0 bg-light rounded-3 mb-3 hover-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                                <i class="fas fa-shield-alt text-warning"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold text-dark mb-1">Two-Factor Authentication</h6>
+                                                <p class="text-muted mb-0 small">Add an extra layer of security to your account</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="twoFactorAuth">
+                                            <label class="form-check-label" for="twoFactorAuth"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dark Mode -->
+                            <div class="card border-0 bg-light rounded-3 mb-3 hover-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-dark bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                                <i class="fas fa-moon text-dark"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold text-dark mb-1">Dark Mode</h6>
+                                                <p class="text-muted mb-0 small">Switch to dark theme for better viewing</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="darkMode">
+                                            <label class="form-check-label" for="darkMode"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data Sync -->
+                            <div class="card border-0 bg-light rounded-3 mb-3 hover-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                                <i class="fas fa-sync-alt text-info"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold text-dark mb-1">Data Sync</h6>
+                                                <p class="text-muted mb-0 small">Automatically sync your data across devices</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="dataSync" checked>
+                                            <label class="form-check-label" for="dataSync"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Privacy Mode -->
+                            <div class="card border-0 bg-light rounded-3 mb-3 hover-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                                <i class="fas fa-user-secret text-secondary"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold text-dark mb-1">Privacy Mode</h6>
+                                                <p class="text-muted mb-0 small">Hide your online status from other users</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="privacyMode">
+                                            <label class="form-check-label" for="privacyMode"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="text-center mt-4">
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <button class="btn btn-primary rounded-pill px-4 py-2" id="saveSettings">
+                                <i class="fas fa-save me-2"></i>
+                                Save Changes
+                            </button>
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Back to Dashboard
+                            </a>
+                            <button class="btn btn-outline-danger rounded-pill px-4 py-2" id="resetSettings">
+                                <i class="fas fa-undo me-2"></i>
+                                Reset to Default
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Floating Action Button -->
+<div class="position-fixed bottom-0 end-0 p-4">
+    <button class="btn btn-primary rounded-circle shadow-lg" style="width: 60px; height: 60px;" id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="settingsToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="fas fa-check-circle text-success me-2"></i>
+            <strong class="me-auto">Settings Updated</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+            Your settings have been saved successfully!
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Animate cards on scroll
+        function animateOnScroll() {
+            $('.card, .hover-card').each(function() {
+                var cardTop = $(this).offset().top;
+                var cardBottom = cardTop + $(this).outerHeight();
+                var viewportTop = $(window).scrollTop();
+                var viewportBottom = viewportTop + $(window).height();
+                
+                if (cardBottom > viewportTop && cardTop < viewportBottom) {
+                    $(this).addClass('animate__animated animate__fadeInUp');
+                }
+            });
+        }
+
+        // Initial animation
+        setTimeout(function() {
+            $('.navbar-brand span').addClass('animate__animated animate__fadeIn');
+        }, 500);
+
+        // Hover effects for cards
+        $('.hover-card').hover(
+            function() {
+                $(this).addClass('shadow').css('transform', 'translateY(-3px)');
+            },
+            function() {
+                $(this).removeClass('shadow').css('transform', 'translateY(0)');
+            }
+        );
+
+        // Scroll to top functionality
+        $('#scrollTopBtn').click(function() {
+            $('html, body').animate({scrollTop: 0}, 800);
+        });
+
+        // Show/hide scroll to top button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 300) {
+                $('#scrollTopBtn').fadeIn();
+            } else {
+                $('#scrollTopBtn').fadeOut();
+            }
+            
+            // Trigger scroll animations
+            animateOnScroll();
+        });
+
+        // Hide scroll to top button initially
+        $('#scrollTopBtn').hide();
+
+        // Save settings functionality
+        $('#saveSettings').click(function() {
+            var $btn = $(this);
+            var originalText = $btn.html();
+            $btn.html('<span class="spinner-border spinner-border-sm me-2" role="status"></span>Saving...');
+            $btn.prop('disabled', true);
+            
+            // Simulate save
+            setTimeout(function() {
+                $btn.html('<i class="fas fa-check me-2"></i>Saved!');
+                $btn.removeClass('btn-primary').addClass('btn-success');
+                
+                // Show toast notification
+                var toast = new bootstrap.Toast(document.getElementById('settingsToast'));
+                toast.show();
+                
+                setTimeout(function() {
+                    $btn.html(originalText);
+                    $btn.removeClass('btn-success').addClass('btn-primary');
+                    $btn.prop('disabled', false);
+                }, 2000);
+            }, 1500);
+        });
+
+        // Reset settings functionality
+        $('#resetSettings').click(function() {
+            var $btn = $(this);
+            var originalText = $btn.html();
+            $btn.html('<span class="spinner-border spinner-border-sm me-2" role="status"></span>Resetting...');
+            $btn.prop('disabled', true);
+            
+            // Simulate reset
+            setTimeout(function() {
+                // Reset all checkboxes
+                $('#emailNotifications').prop('checked', true);
+                $('#pushNotifications').prop('checked', false);
+                $('#twoFactorAuth').prop('checked', false);
+                $('#darkMode').prop('checked', false);
+                $('#dataSync').prop('checked', true);
+                $('#privacyMode').prop('checked', false);
+                
+                $btn.html('<i class="fas fa-check me-2"></i>Reset!');
+                $btn.removeClass('btn-outline-danger').addClass('btn-success');
+                
+                setTimeout(function() {
+                    $btn.html(originalText);
+                    $btn.removeClass('btn-success').addClass('btn-outline-danger');
+                    $btn.prop('disabled', false);
+                }, 1500);
+            }, 1000);
+        });
+
+        // Add pulse animation to settings icon
+        setInterval(function() {
+            $('.bg-white.bg-opacity-20').addClass('animate__animated animate__pulse');
+            setTimeout(function() {
+                $('.bg-white.bg-opacity-20').removeClass('animate__animated animate__pulse');
+            }, 1000);
+        }, 4000);
+
+        // Typing effect for settings title
+        function typeWriter(element, text, speed = 100) {
+            var i = 0;
+            element.html('');
+            function type() {
+                if (i < text.length) {
+                    element.html(element.html() + text.charAt(i));
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Start typing effect after page load
+        setTimeout(function() {
+            var settingsTitle = $('.card-body h2');
+            var originalText = settingsTitle.text();
+            typeWriter(settingsTitle, originalText, 50);
+        }, 1000);
+
+        // Add click effects to switches
+        $('.form-check-input').change(function() {
+            var $switch = $(this);
+            var $card = $switch.closest('.hover-card');
+            
+            if ($switch.is(':checked')) {
+                $card.addClass('animate__animated animate__pulse');
+                setTimeout(function() {
+                    $card.removeClass('animate__animated animate__pulse');
+                }, 500);
+            }
+        });
+    });
+</script>
+{% endblock %}

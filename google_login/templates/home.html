@@ -1,0 +1,450 @@
+{% load socialaccount %}
+{% providers_media_js %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Google OAuth</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Animated Background Elements -->
+    <div class="position-fixed top-0 start-0 w-100 h-100 overflow-hidden" style="z-index: -1;">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-gradient-light"></div>
+        <div class="position-absolute top-0 start-0 w-100 h-100">
+            <div class="position-absolute" style="top: 5%; left: 5%; animation: float 8s ease-in-out infinite;">
+                <i class="fas fa-cloud text-primary opacity-10" style="font-size: 3rem;"></i>
+            </div>
+            <div class="position-absolute" style="top: 15%; right: 10%; animation: float 10s ease-in-out infinite reverse;">
+                <i class="fas fa-star text-warning opacity-10" style="font-size: 2.5rem;"></i>
+            </div>
+            <div class="position-absolute" style="bottom: 10%; left: 10%; animation: float 9s ease-in-out infinite;">
+                <i class="fas fa-heart text-danger opacity-10" style="font-size: 2rem;"></i>
+            </div>
+            <div class="position-absolute" style="bottom: 20%; right: 5%; animation: float 7s ease-in-out infinite reverse;">
+                <i class="fas fa-moon text-info opacity-10" style="font-size: 3.5rem;"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="#">
+                <i class="fab fa-google me-2 fs-3"></i>
+                <span class="animate__animated animate__fadeIn">OAuth Dashboard</span>
+            </a>
+            <div class="navbar-nav ms-auto">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        {{ name|default:"User" }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user me-2 text-primary"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'settings' %}"><i class="fas fa-cog me-2 text-success"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Welcome Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-lg rounded-4 bg-gradient-primary text-white overflow-hidden">
+                    <div class="card-body p-5 text-center position-relative">
+                        <div class="position-absolute top-0 end-0 p-4 opacity-25">
+                            <i class="fas fa-rocket" style="font-size: 4rem;"></i>
+                        </div>
+                        <div class="animate__animated animate__fadeInUp">
+                            <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
+                                <i class="fas fa-user-circle text-white" style="font-size: 3rem;"></i>
+                            </div>
+                            <h2 class="mb-3 fw-bold" id="welcomeText">Welcome, {{ name|default:"User" }}!</h2>
+                            <p class="mb-0 fs-5 opacity-75">You have successfully authenticated with Google OAuth</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow h-100 rounded-4 hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-calendar-check text-primary" style="font-size: 2rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">Calendar Events</h4>
+                        <p class="text-muted mb-0">Manage your schedule</p>
+                        <div class="mt-3">
+                            <span class="badge bg-primary rounded-pill">12 Events</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow h-100 rounded-4 hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-tasks text-success" style="font-size: 2rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">Tasks</h4>
+                        <p class="text-muted mb-0">Organize your work</p>
+                        <div class="mt-3">
+                            <span class="badge bg-success rounded-pill">8 Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow h-100 rounded-4 hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-chart-line text-info" style="font-size: 2rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">Analytics</h4>
+                        <p class="text-muted mb-0">Track your progress</p>
+                        <div class="mt-3">
+                            <span class="badge bg-info rounded-pill">+15% Growth</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow rounded-4">
+                    <div class="card-header bg-transparent border-0 p-4">
+                        <h4 class="fw-bold mb-0 d-flex align-items-center">
+                            <i class="fas fa-calendar-alt text-primary me-2"></i>
+                            Recent Activity
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        {% if events %}
+                            <div class="list-group list-group-flush">
+        {% for event in events %}
+                                    <div class="list-group-item border-0 mb-2 rounded-3 bg-light hover-card">
+                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                            <h6 class="mb-1 fw-bold text-dark">{{ event.summary }}</h6>
+                                            <span class="badge bg-primary rounded-pill">{{ event.start_time|date:"M d, Y" }}</span>
+                                        </div>
+                                        <p class="mb-0 text-muted">
+                                            <i class="fas fa-clock me-2 text-muted"></i>
+                                            {{ event.start_time|time:"H:i" }} - {{ event.end_time|time:"H:i" }}
+                                        </p>
+                                    </div>
+        {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-5">
+                                <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+                                    <i class="fas fa-calendar-times text-muted" style="font-size: 3rem;"></i>
+                                </div>
+                                <h5 class="text-muted mb-2">No events found</h5>
+                                <p class="text-muted mb-0">Your calendar is empty. Start adding events!</p>
+                                <button class="btn btn-primary rounded-pill mt-3 hover-btn" id="addEventBtn">
+                                    <i class="fas fa-plus me-2"></i>
+                                    Add Event
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card border-0 shadow rounded-4">
+                    <div class="card-header bg-transparent border-0 p-4">
+                        <h5 class="fw-bold mb-0 d-flex align-items-center">
+                            <i class="fas fa-user-shield text-success me-2"></i>
+                            Account Info
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-grid gap-3">
+                            <div class="d-flex align-items-center p-3 bg-light rounded-3 hover-card">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <i class="fas fa-envelope text-primary"></i>
+                                </div>
+                                <div>
+                                    <small class="text-muted d-block">Email</small>
+                                    <div class="fw-bold text-dark">{{ user.email|default:"user@example.com" }}</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center p-3 bg-light rounded-3 hover-card">
+                                <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <i class="fas fa-calendar text-success"></i>
+                                </div>
+                                <div>
+                                    <small class="text-muted d-block">Member Since</small>
+                                    <div class="fw-bold text-dark">{{ user.date_joined|date:"M d, Y"|default:"Today" }}</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center p-3 bg-light rounded-3 hover-card">
+                                <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <i class="fas fa-clock text-info"></i>
+                                </div>
+                                <div>
+                                    <small class="text-muted d-block">Last Login</small>
+                                    <div class="fw-bold text-dark">{{ user.last_login|date:"M d, Y H:i"|default:"Today" }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="{% url 'logout' %}" class="btn btn-danger w-100 rounded-pill shadow-sm hover-btn" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card border-0 shadow rounded-4">
+                    <div class="card-header bg-transparent border-0 p-4">
+                        <h5 class="fw-bold mb-0 d-flex align-items-center">
+                            <i class="fas fa-bolt text-warning me-2"></i>
+                            Quick Actions
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-primary w-100 rounded-3 p-3 hover-btn" id="quickAction1">
+                                    <i class="fas fa-calendar-plus text-primary mb-2" style="font-size: 2rem;"></i>
+                                    <div class="fw-bold">Add Event</div>
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-success w-100 rounded-3 p-3 hover-btn" id="quickAction2">
+                                    <i class="fas fa-tasks text-success mb-2" style="font-size: 2rem;"></i>
+                                    <div class="fw-bold">New Task</div>
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-info w-100 rounded-3 p-3 hover-btn" id="quickAction3">
+                                    <i class="fas fa-chart-bar text-info mb-2" style="font-size: 2rem;"></i>
+                                    <div class="fw-bold">View Stats</div>
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-warning w-100 rounded-3 p-3 hover-btn" id="quickAction4">
+                                    <i class="fas fa-cog text-warning mb-2" style="font-size: 2rem;"></i>
+                                    <div class="fw-bold">Settings</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="position-fixed bottom-0 end-0 p-4">
+        <button class="btn btn-primary rounded-circle shadow-lg hover-btn" style="width: 60px; height: 60px;" id="scrollTopBtn">
+            <i class="fas fa-arrow-up"></i>
+    </button>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="actionToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fas fa-check-circle text-success me-2"></i>
+                <strong class="me-auto">Action Completed</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                Your action has been completed successfully!
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Animate cards on scroll
+            function animateOnScroll() {
+                $('.card, .hover-card').each(function() {
+                    var cardTop = $(this).offset().top;
+                    var cardBottom = cardTop + $(this).outerHeight();
+                    var viewportTop = $(window).scrollTop();
+                    var viewportBottom = viewportTop + $(window).height();
+                    
+                    if (cardBottom > viewportTop && cardTop < viewportBottom) {
+                        $(this).addClass('animate__animated animate__fadeInUp');
+                    }
+                });
+            }
+
+            // Initial animation
+            setTimeout(function() {
+                $('.navbar-brand span').addClass('animate__animated animate__fadeIn');
+            }, 500);
+
+            // Enhanced hover effects for cards
+            $('.hover-card').hover(
+                function() {
+                    $(this).addClass('shadow-lg').css('transform', 'translateY(-5px)');
+                },
+                function() {
+                    $(this).removeClass('shadow-lg').css('transform', 'translateY(0)');
+                }
+            );
+
+            // Enhanced hover effects for buttons
+            $('.hover-btn').hover(
+                function() {
+                    $(this).addClass('shadow').css('transform', 'translateY(-2px) scale(1.02)');
+                },
+                function() {
+                    $(this).removeClass('shadow').css('transform', 'translateY(0) scale(1)');
+                }
+            );
+
+            // Scroll to top functionality
+            $('#scrollTopBtn').click(function() {
+                $('html, body').animate({scrollTop: 0}, 800);
+            });
+
+            // Show/hide scroll to top button
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 300) {
+                    $('#scrollTopBtn').fadeIn();
+                } else {
+                    $('#scrollTopBtn').fadeOut();
+                }
+                
+                // Trigger scroll animations
+                animateOnScroll();
+            });
+
+            // Hide scroll to top button initially
+            $('#scrollTopBtn').hide();
+
+            // Quick action buttons
+            $('#quickAction1').click(function() {
+                showToast('Event creation feature coming soon!');
+                $(this).addClass('animate__animated animate__bounce');
+                setTimeout(() => $(this).removeClass('animate__animated animate__bounce'), 1000);
+            });
+
+            $('#quickAction2').click(function() {
+                showToast('Task management feature coming soon!');
+                $(this).addClass('animate__animated animate__bounce');
+                setTimeout(() => $(this).removeClass('animate__animated animate__bounce'), 1000);
+            });
+
+            $('#quickAction3').click(function() {
+                showToast('Analytics dashboard coming soon!');
+                $(this).addClass('animate__animated animate__bounce');
+                setTimeout(() => $(this).removeClass('animate__animated animate__bounce'), 1000);
+            });
+
+            $('#quickAction4').click(function() {
+                window.location.href = "{% url 'settings' %}";
+            });
+
+            $('#addEventBtn').click(function() {
+                showToast('Event creation feature coming soon!');
+                $(this).addClass('animate__animated animate__bounce');
+                setTimeout(() => $(this).removeClass('animate__animated animate__bounce'), 1000);
+            });
+
+            // Toast notification function
+            function showToast(message) {
+                $('#actionToast .toast-body').text(message);
+                var toast = new bootstrap.Toast(document.getElementById('actionToast'));
+                toast.show();
+            }
+
+            // Typing effect for welcome message
+            function typeWriter(element, text, speed = 100) {
+                var i = 0;
+                element.html('');
+                function type() {
+                    if (i < text.length) {
+                        element.html(element.html() + text.charAt(i));
+                        i++;
+                        setTimeout(type, speed);
+                    }
+                }
+                type();
+            }
+
+            // Start typing effect after page load
+            setTimeout(function() {
+                var welcomeText = $('#welcomeText');
+                var originalText = welcomeText.text();
+                typeWriter(welcomeText, originalText, 50);
+            }, 1000);
+
+            // Add pulse animation to welcome icon
+            setInterval(function() {
+                $('.bg-white.bg-opacity-20').addClass('animate__animated animate__pulse');
+                setTimeout(function() {
+                    $('.bg-white.bg-opacity-20').removeClass('animate__animated animate__pulse');
+                }, 1000);
+            }, 3000);
+
+            // Floating animation for background elements
+            $('.position-absolute i').each(function(index) {
+                $(this).css('animation-delay', (index * 0.5) + 's');
+            });
+
+            // Add loading animation to logout button
+            $('#logoutBtn').click(function() {
+                var $btn = $(this);
+                var originalText = $btn.html();
+                $btn.html('<span class="spinner-border spinner-border-sm me-2" role="status"></span>Signing out...');
+                $btn.prop('disabled', true);
+                
+                setTimeout(function() {
+                    $btn.html(originalText);
+                    $btn.prop('disabled', false);
+                }, 1000);
+            });
+        });
+
+        // CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-20px); }
+            }
+            
+            .bg-gradient-primary {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            
+            .bg-gradient-light {
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -33,7 +33,15 @@ SECRET_KEY = 'django-insecure-4gl*901%f4k68in#+sm-_q03cz$3@%v^43br5y$*q7#1l=tu5q
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+# Ngrok Support
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.ngrok-free.app',
+    'https://*.ngrok.io',
+    'https://*.ngrok-app.com',
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 
@@ -175,12 +183,12 @@ LOGOUT_URL = "/logout/"
 # AllAuth Settings
 ACCOUNT_LOGOUT_REDIRECT_URL = "/logout/"
 ACCOUNT_LOGIN_REDIRECT_URL = "/"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
 # Override allauth login/signup URLs to use custom views
 ACCOUNT_LOGIN_URL = "/login/"
